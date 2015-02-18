@@ -15,7 +15,7 @@ public class BatchLayerDriver extends Configured implements Tool{
 	{
 
 		if(args.length !=2) {
-			System.err.println("Usage: MaxTemperatureDriver <input path> <outputpath>");
+			System.err.println("Usage: View Creation One <input path> <outputpath>");
 			System.exit(-1);
 		}
 
@@ -28,7 +28,7 @@ public class BatchLayerDriver extends Configured implements Tool{
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job,new Path(args[1]));
 
-		job.setMapperClass(BatchLayerMapper.class);
+		job.setMapperClass(BatchLayerMapper_KeyId.class);
 		job.setReducerClass(BatchLayerReducer.class);
 
 		job.setOutputKeyClass(Text.class);
