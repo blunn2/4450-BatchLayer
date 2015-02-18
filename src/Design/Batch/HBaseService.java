@@ -66,6 +66,9 @@ public class HBaseService {
 		return true;
 	}
 	
+	//Creating a table for sensor readings. each row is a sensor reading for a given sensor id and timestamp
+	//Rowkey is sensorId-Timestamp to ensure that all data for one sensor is close by to optimize scans
+	//first record for id will be oldest timestamp based on HBase sorting
 	public static boolean AddData(String tableName, String rowKey, String columnFamily, String columnQualifier, String value)
 	{
 		try {
