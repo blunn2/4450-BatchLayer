@@ -29,7 +29,7 @@ public class BatchLayerDriver extends Configured implements Tool{
 		FileOutputFormat.setOutputPath(job,new Path(args[1]));
 
 		job.setMapperClass(BatchLayerMapper_KeyId.class);
-		job.setReducerClass(BatchLayerReducer.class);
+		job.setReducerClass(BatchLayerReducer_HBaseSensorIdReads.class);
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
