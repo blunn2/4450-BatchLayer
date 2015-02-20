@@ -41,6 +41,6 @@ extends Reducer<Text, Text, Text, Text> {
 				System.out.println("Data outputted to HBase table: " + tableName);
 		}
 		//outputs the key which is year and the max value
-		context.write(key, new Text());
+		context.write(key, new Text("Got to end"));
 	}
 }
