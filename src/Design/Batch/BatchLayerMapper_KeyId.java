@@ -10,7 +10,7 @@ public class BatchLayerMapper_KeyId extends
 	@Override
 	// Takes in input data and maps it to a key/value pair
 	// Data format: PK|SensorID|VALUE|TIMESTAMP
-	// Output: key is SensorID and value is TIMESTAMP:VALUE
+	// Output: key is SensorID and value is TIMESTAMP|VALUE
 	public void map(LongWritable key, Text value, Context context)
 			throws IOException, InterruptedException {
 
