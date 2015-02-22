@@ -17,22 +17,17 @@ public class BatchLayerMapper_KeyId extends
 		String line = value.toString();
 		
 		// split string on |
-		String[] lineValues = line.split("|");
-		System.out.println("Size of input: " + lineValues.length);
+		String[] lineValues = line.split("\\|");
 		
 		// save key
 		String sensorId = lineValues[1];
-		System.out.println("Key: " + sensorId);
 
 		// save value. value is TIMESTAMP:VALUE
 		String mapValue = lineValues[3] + "|" + lineValues[2];
-		System.out.println("MapValue: " + mapValue);
 		
 		// takes key as sensorId and value as the mapReduceValue created above
 		if (sensorId != "" && mapValue != "") {
 			context.write(new Text(sensorId), new Text(mapValue));
 		}
-		
-		System.out.println("---------------------------");
 	}
 }

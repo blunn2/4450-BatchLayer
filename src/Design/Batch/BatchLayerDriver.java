@@ -9,6 +9,7 @@ import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
@@ -33,7 +34,10 @@ public class BatchLayerDriver extends Configured implements Tool {
 
 		Job job = new Job(config, "View One");
 		job.setJarByClass(BatchLayerDriver.class);
-
+		
+		//Sets default input format. Mapper will read one line of input file at a time
+		job.setInputFormatClass(TextInputFormat.class);
+		
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 

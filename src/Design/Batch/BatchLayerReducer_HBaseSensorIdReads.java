@@ -16,15 +16,12 @@ public class BatchLayerReducer_HBaseSensorIdReads extends
 		// iterate through values and write to table
 		for (Text value : values) {
 			// Value format: Timestamp:Value. Value is sensor reading
-			String[] valueArray = value.toString().split("|");
+			String[] valueArray = value.toString().split("\\|");
 
 			// rowKey is sensorId plus timestamp.
 			// Ensures that records are sorted by timestamp and are next to each
 			// other
-			String rowKey = key.toString() + "-" + valueArray[1];
-			System.out.println("row key: " + rowKey);
-			
-			System.out.println("=====================");
+			String rowKey = key.toString() + "-" + valueArray[0];
 			
 			Put put = new Put(Bytes.toBytes(rowKey));
 			put.add(Bytes.toBytes("d"), Bytes.toBytes("val"),
