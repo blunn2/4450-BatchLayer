@@ -9,7 +9,7 @@ public class BatchLayerMapper_KeyId extends
 		Mapper<LongWritable, Text, Text, Text> {
 	@Override
 	// Takes in input data and maps it to a key/value pair
-	// Data format: PK|SensorID|VALUE|TIMESTAMP
+	// Data format: SensorID|VALUE|TIMESTAMP
 	// Output: key is SensorID and value is TIMESTAMP|VALUE
 	public void map(LongWritable key, Text value, Context context)
 			throws IOException, InterruptedException {
@@ -20,10 +20,10 @@ public class BatchLayerMapper_KeyId extends
 		String[] lineValues = line.split("\\|");
 		
 		// save key
-		String sensorId = lineValues[1];
+		String sensorId = lineValues[0];
 
 		// save value. value is TIMESTAMP:VALUE
-		String mapValue = lineValues[3] + "|" + lineValues[2];
+		String mapValue = lineValues[2] + "|" + lineValues[1];
 		
 		// takes key as sensorId and value as the mapReduceValue created above
 		if (sensorId != "" && mapValue != "") {

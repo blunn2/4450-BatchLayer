@@ -16,13 +16,16 @@ import org.apache.hadoop.util.ToolRunner;
 public class BatchLayerDriver extends Configured implements Tool {
 	public int run(String[] args) throws Exception {
 
-		if (args.length != 1) {
+		if (args.length != 2) {
 			System.err
-					.println("Usage: View Creation One <input path>");
+					.println("Usage: View Creation One <input path> <table name>");
 			System.exit(-1);
 		}
 		
 		Configuration config = HBaseConfiguration.create();
+		config = HBaseConfiguration.create();
+		config.set("hbase.zookeeper.quorum", "zookeeper-1");  
+		config.set("hbase.zookeeper.property.clientPort", "2181");
 		
 		Scan scan = new Scan();
 		scan.setCaching(500);        // 1 is the default in Scan, which will be bad for MapReduce jobs
@@ -30,9 +33,9 @@ public class BatchLayerDriver extends Configured implements Tool {
 		
 		/* TODO: set name for job */
 
-		Job job = new Job(config, "View One");
+		Job job = Job.getInstance(config, "View One");
 		job.setJarByClass(BatchLayerDriver.class);
-		
+				
 		//adds input path
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 
@@ -42,7 +45,7 @@ public class BatchLayerDriver extends Configured implements Tool {
 		job.setMapOutputValueClass(Text.class);
 		
 		//connects to Hbase table SensorValues
-		TableMapReduceUtil.initTableReducerJob("SensorValues",
+		TableMapReduceUtil.initTableReducerJob(args[1],
 				BatchLayerReducer_HBaseSensorIdReads.class, job);
 
 		job.setReducerClass(BatchLayerReducer_HBaseSensorIdReads.class);
